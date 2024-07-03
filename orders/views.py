@@ -55,17 +55,27 @@ def order(request):
 
         return Response(response_data, status=200)
 
-@api_view(['DELETE', 'GET'])
+@api_view(['GET','PATCH'])
 def order_delete_detail(request, id):
     if not id:
         return Response(status=400)
-    if request.method == 'DELETE':
-        try:
+    #
+    #if request.method == 'DELETE':
+    #    try:
+    #        order = Order.objects.get(id=id)
+    #    except Order.DoesNotExist:
+    #        return Response(status=404)
+    #    
+    #    order.delete()
+    #    return Response(status=200)
+    
+    if request.method == 'PATCH':
+        try: 
             order = Order.objects.get(id=id)
         except Order.DoesNotExist:
             return Response(status=404)
-        
-        order.delete()
+        order.status = 'cancelled'
+        order.save()
         return Response(status=200)
     
     elif request.method == 'GET':

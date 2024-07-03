@@ -45,7 +45,8 @@ class OrderSerializer(serializers.ModelSerializer):
     member_id = serializers.IntegerField(source='member.id')
     items = OrderItemSerializer(many=True, source='order_item_set')  # OrderItemSerializer를 사용하여 items 필드 직렬화
     order_date = serializers.DateTimeField()  # Order 모델의 created_at을 order_date로 사용
+    status = serializers.CharField(max_length=50)
     
     class Meta:
         model = Order_item
-        fields = ['order_id', 'member_id', 'order_date','items']
+        fields = ['order_id', 'member_id', 'order_date','status','items']
